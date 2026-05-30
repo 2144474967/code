@@ -11,6 +11,9 @@
             box-sizing: border-box;
             font-family: "Microsoft Yahei", sans-serif;
         }
+        html {
+            scroll-behavior: smooth;
+        }
         body {
             background-color: #f0f2f5;
             color: #333;
@@ -19,44 +22,71 @@
         header {
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             color: white;
-            padding: 40px 20px;
+            padding: 50px 20px 40px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(233,69,96,0.1) 0%, transparent 60%);
+            animation: pulse 6s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 1; }
         }
         header h1 {
-            font-size: 2em;
-            margin-bottom: 10px;
+            font-size: 2.2em;
+            margin-bottom: 8px;
+            position: relative;
+            letter-spacing: 2px;
         }
         header p {
             opacity: 0.8;
-            font-size: 1.1em;
+            font-size: 1.05em;
+            position: relative;
+        }
+        header p:last-child {
+            margin-top: 6px;
+            opacity: 0.6;
+            font-size: 0.95em;
         }
         nav {
             background-color: #1a1a2e;
-            padding: 12px 0;
+            padding: 14px 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
         }
         nav ul {
             list-style: none;
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
             padding: 0 10px;
         }
         nav a {
-            color: white;
+            color: rgba(255,255,255,0.85);
             text-decoration: none;
-            padding: 8px 18px;
+            padding: 8px 20px;
             border-radius: 20px;
             transition: all 0.3s;
             font-size: 0.95em;
+            border: 1px solid transparent;
         }
         nav a:hover {
             background-color: #e94560;
+            color: white;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(233,69,96,0.4);
         }
         .container {
             max-width: 960px;
@@ -68,7 +98,8 @@
             padding: 30px;
             margin-bottom: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: transform 0.2s;
         }
         h2 {
             color: #0f3460;
@@ -76,11 +107,12 @@
             padding-bottom: 10px;
             border-bottom: 3px solid #e94560;
             font-size: 1.5em;
+            position: relative;
         }
         h3 {
             color: #16213e;
             margin: 20px 0 10px;
-            font-size: 1.2em;
+            font-size: 1.15em;
         }
         .placeholder {
             background-color: #fff3cd;
@@ -103,20 +135,26 @@
         .profile-card {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
             margin-top: 15px;
         }
         .profile-item {
             background-color: #f8f9fa;
-            padding: 15px;
+            padding: 16px 18px;
             border-radius: 8px;
             border-left: 4px solid #e94560;
+            transition: background-color 0.2s;
+        }
+        .profile-item:hover {
+            background-color: #f1f3f5;
         }
         .profile-item label {
             font-weight: bold;
             color: #0f3460;
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            font-size: 0.9em;
+            letter-spacing: 1px;
         }
         /* Timeline */
         .timeline {
@@ -138,6 +176,10 @@
             padding: 20px;
             background-color: #f8f9fa;
             border-radius: 8px;
+            transition: box-shadow 0.3s;
+        }
+        .timeline-item:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
         }
         .timeline-item::before {
             content: '';
@@ -198,23 +240,78 @@
         .bug-card {
             background-color: #fff5f5;
             border-left: 4px solid #dc3545;
-            padding: 15px;
+            padding: 16px 18px;
             margin: 15px 0;
             border-radius: 0 8px 8px 0;
+            transition: transform 0.2s;
+        }
+        .bug-card:hover {
+            transform: translateX(4px);
         }
         .solution-card {
             background-color: #f0fff4;
             border-left: 4px solid #28a745;
-            padding: 15px;
+            padding: 16px 18px;
             margin: 15px 0;
             border-radius: 0 8px 8px 0;
+            transition: transform 0.2s;
+        }
+        .solution-card:hover {
+            transform: translateX(4px);
+        }
+        .img-wrap {
+            margin-top: 15px;
+            text-align: center;
+        }
+        .img-wrap img {
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        .img-wrap img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
         footer {
             text-align: center;
-            padding: 25px;
+            padding: 30px 20px;
             background-color: #1a1a2e;
             color: white;
             margin-top: 40px;
+            line-height: 2;
+        }
+        footer a {
+            color: #e94560;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: #ff6b81;
+            text-decoration: underline;
+        }
+        .repo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 8px;
+            padding: 8px 20px;
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            color: white;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+        .repo-link:hover {
+            background-color: #e94560;
+            border-color: #e94560;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(233,69,96,0.4);
+            text-decoration: none;
+            color: white;
         }
         @media (max-width: 768px) {
             .profile-card {
@@ -246,6 +343,7 @@
             <li><a href="#design-log">Design Log</a></li>
             <li><a href="#tech-stack">Tech Stack</a></li>
             <li><a href="#reflections">Reflections</a></li>
+            <li><a href="https://github.com/2144474967/code" target="_blank" style="border: 1px solid rgba(255,255,255,0.3);">GitHub</a></li>
         </ul>
     </nav>
 
@@ -284,8 +382,8 @@
                     <div>初始方案：以 ESP32 DevKit NodeMCU 作为主控核心，搭载 HC-SR04 超声波传感器与光敏电阻分别采集人体动向和环境光照数据，利用 SG90 舵机模拟人手按压原有墙面物理开关，整机配套定制 3D 打印一体化外壳，依托 3M 双面胶粘贴在原有开关侧边，采用 USB-TYPE-C 低压供电，无需拆装原有线路，五分钟即可完成贴装、实现即贴即用；设备搭载独创的三级优先级、状态锁存与单向触发控制逻辑，其中优先级最高为手动控制，可通过 Blinker 手机 APP 远程操控或是设备本地按键启停开关，触发后自动锁定自动控制逻辑十分钟，防止自动程序干预人为操作；次优先级为自动开灯，在未处于手动锁定前提下，环境光线昏暗且超声波探测两米内有人体靠近时，舵机执行动作点亮灯具；末级为自动关灯，非锁定状态下传感器连续五分钟检测不到人体活动便自动关停灯光，系统还设定光敏仅参与开灯判定、不介入关灯逻辑的单向规则，既从源头杜绝灯具自身光源干扰光敏引发的误触发与灯光频闪问题，又能依靠人体活动实时刷新关灯倒计时，有效解决人在室内却无故熄灯的使用痛点
                         项目设计卡：
                     </div>
-                    <div style="margin-top: 15px; text-align: center;">
-                        <img src="images/design-card.png" alt="初始方案设计图" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                    <div class="img-wrap">
+                        <img src="images/design-card.png" alt="初始方案设计图">
                     </div>
                 </div>
 
@@ -298,8 +396,8 @@
                     <div style="background-color: #f0fff4; border-left: 4px solid #28a745; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
                         <strong style="color: #28a745;">方案调整：</strong>放弃 Blinker APP，改用 ESP32 自建网页实现无线控制
                     </div>
-                    <div style="margin-top: 15px; text-align: center;">
-                        <img src="images/screenshot_2026-05-30_1200.jpg" alt="周六下午截图" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                    <div class="img-wrap">
+                        <img src="images/screenshot_2026-05-30_1200.jpg" alt="周六下午截图">
                     </div>
 
                     <div style="background-color: #fff5f5; border-left: 4px solid #dc3545; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
@@ -384,6 +482,10 @@
 
     <footer>
         <p>&copy; 2025 从代码到实物：造你所想 - 个人研发日志</p>
+        <a class="repo-link" href="https://github.com/2144474967/code" target="_blank">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></path></svg>
+            GitHub 仓库
+        </a>
     </footer>
 </body>
 </html>
