@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人研发日志 - 从代码到实物</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Microsoft Yahei", sans-serif;
+        }
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.8;
+        }
+        header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        header p {
+            opacity: 0.8;
+            font-size: 1.1em;
+        }
+        nav {
+            background-color: #1a1a2e;
+            padding: 12px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 0 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 18px;
+            border-radius: 20px;
+            transition: all 0.3s;
+            font-size: 0.95em;
+        }
+        nav a:hover {
+            background-color: #e94560;
+            transform: translateY(-2px);
+        }
+        .container {
+            max-width: 960px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        section {
+            background-color: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+        h2 {
+            color: #0f3460;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #e94560;
+            font-size: 1.5em;
+        }
+        h3 {
+            color: #16213e;
+            margin: 20px 0 10px;
+            font-size: 1.2em;
+        }
+        .placeholder {
+            background-color: #fff3cd;
+            border: 1px dashed #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            color: #856404;
+            margin: 10px 0;
+        }
+        .media-placeholder {
+            background-color: #e8f4f8;
+            border: 2px dashed #17a2b8;
+            padding: 40px;
+            text-align: center;
+            border-radius: 8px;
+            color: #0c5460;
+            margin: 15px 0;
+        }
+        /* Project Profile */
+        .profile-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .profile-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #e94560;
+        }
+        .profile-item label {
+            font-weight: bold;
+            color: #0f3460;
+            display: block;
+            margin-bottom: 5px;
+        }
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 10px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #e94560, #0f3460);
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            background-color: #e94560;
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px #e94560;
+        }
+        .timeline-item h3 {
+            color: #e94560;
+            margin-top: 0;
+        }
+        /* Code Block */
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 15px 0;
+        }
+        .code-block .keyword { color: #569cd6; }
+        .code-block .string { color: #ce9178; }
+        .code-block .comment { color: #6a9955; }
+        .code-block .function { color: #dcdcaa; }
+        /* Hardware List */
+        .hardware-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .hardware-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #dee2e6;
+            transition: transform 0.2s;
+        }
+        .hardware-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .hardware-item .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        /* Reflection */
+        .bug-card {
+            background-color: #fff5f5;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .solution-card {
+            background-color: #f0fff4;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        footer {
+            text-align: center;
+            padding: 25px;
+            background-color: #1a1a2e;
+            color: white;
+            margin-top: 40px;
+        }
+        @media (max-width: 768px) {
+            .profile-card {
+                grid-template-columns: 1fr;
+            }
+            .hardware-list {
+                grid-template-columns: 1fr 1fr;
+            }
+            nav ul {
+                gap: 8px;
+            }
+            nav a {
+                padding: 6px 12px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>个人研发日志</h1>
+        <p>从代码到实物：造你所想 - 期末项目</p>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="#profile">Project Profile</a></li>
+            <li><a href="#design-log">Design Log</a></li>
+            <li><a href="#tech-stack">Tech Stack</a></li>
+            <li><a href="#code">核心代码</a></li>
+            <li><a href="#reflections">Reflections</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Section 1: Project Profile -->
+        <section id="profile">
+            <h2>Project Profile</h2>
+
+            <div class="profile-card">
+                <div class="profile-item">
+                    <label>项目名称</label>
+                    <div class="placeholder">[在此填写项目名称]</div>
+                </div>
+                <div class="profile-item">
+                    <label>产品定义（一句话）</label>
+                    <div class="placeholder">[用一句话描述你的产品是什么、解决什么问题]</div>
+                </div>
+                <div class="profile-item">
+                    <label>团队成员</label>
+                    <div class="placeholder">[成员1：姓名]<br>[成员2：姓名]<br>[成员3：姓名]</div>
+                </div>
+                <div class="profile-item">
+                    <label>个人贡献</label>
+                    <div class="placeholder">[描述你在项目中的具体职责和贡献]</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 2: Design Log (Timeline) -->
+        <section id="design-log">
+            <h2>Design Log - 设计迭代时间轴</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h3>Saturday Morning - 周六上午</h3>
+                    <div class="placeholder">[设计思路、初始方案]</div>
+                    <div class="media-placeholder">
+                        [插入失败的草图/照片]<br>
+                        <small>可使用 &lt;img src="图片路径" alt="描述"&gt; 添加图片</small>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>Saturday Afternoon - 周六下午</h3>
+                    <div class="placeholder">[方案调整、遇到的问题]</div>
+                    <div class="media-placeholder">
+                        [插入失败的草图/照片]
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <h3>Sunday Morning - 周日早晨</h3>
+                    <div class="placeholder">[最终方案、迭代结果]</div>
+                    <div class="media-placeholder">
+                        [插入最终设计/照片]
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Tech Stack & Code -->
+        <section id="tech-stack">
+            <h2>Tech Stack - 技术栈与硬件清单</h2>
+
+            <h3>硬件清单</h3>
+            <div class="hardware-list">
+                <div class="hardware-item">
+                    <div class="icon">[ ]</div>
+                    <strong>[硬件名称1]</strong>
+                    <p><small>[型号/规格]</small></p>
+                </div>
+                <div class="hardware-item">
+                    <div class="icon">[ ]</div>
+                    <strong>[硬件名称2]</strong>
+                    <p><small>[型号/规格]</small></p>
+                </div>
+                <div class="hardware-item">
+                    <div class="icon">[ ]</div>
+                    <strong>[硬件名称3]</strong>
+                    <p><small>[型号/规格]</small></p>
+                </div>
+                <div class="hardware-item">
+                    <div class="icon">[ ]</div>
+                    <strong>[硬件名称4]</strong>
+                    <p><small>[型号/规格]</small></p>
+                </div>
+            </div>
+
+            <h3>软件/工具</h3>
+            <div class="placeholder">
+                [Arduino IDE / PlatformIO / 其他开发环境]<br>
+                [使用的库/框架]
+            </div>
+        </section>
+
+        <!-- Section 4: Core Code -->
+        <section id="code">
+            <h2>核心嵌入式代码</h2>
+
+            <p>GitHub 仓库链接：<a href="#" class="placeholder">[在此粘贴 GitHub 链接]</a></p>
+
+            <h3>核心功能代码片段 1</h3>
+            <div class="code-block">
+<span class="comment">// [代码功能说明]</span>
+<span class="keyword">void</span> <span class="function">setup</span>() {
+    <span class="comment">// [初始化代码]</span>
+}
+
+<span class="keyword">void</span> <span class="function">loop</span>() {
+    <span class="comment">// [主循环代码]</span>
+}
+            </div>
+
+            <h3>核心功能代码片段 2</h3>
+            <div class="code-block">
+<span class="comment">// [代码功能说明]</span>
+<span class="keyword">void</span> <span class="function">yourFunction</span>() {
+    <span class="comment">// [在此粘贴核心代码]</span>
+}
+            </div>
+        </section>
+
+        <!-- Section 5: Reflections -->
+        <section id="reflections">
+            <h2>Reflections - 反思与总结</h2>
+
+            <h3>遇到的硬核 Bug</h3>
+
+            <div class="bug-card">
+                <strong>Bug #1：[问题标题]</strong>
+                <div class="placeholder">[详细描述遇到的问题、现象]</div>
+            </div>
+
+            <div class="bug-card">
+                <strong>Bug #2：[问题标题]</strong>
+                <div class="placeholder">[详细描述遇到的问题、现象]</div>
+            </div>
+
+            <h3>解决方案与妥协</h3>
+
+            <div class="solution-card">
+                <strong>针对 Bug #1：</strong>
+                <div class="placeholder">[如何解决的？或者做了什么妥协？]</div>
+            </div>
+
+            <div class="solution-card">
+                <strong>针对 Bug #2：</strong>
+                <div class="placeholder">[如何解决的？或者做了什么妥协？]</div>
+            </div>
+
+            <h3>整体反思</h3>
+            <div class="placeholder">
+                [项目整体的收获、教训、如果重新来会怎么做]
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 从代码到实物：造你所想 - 个人研发日志</p>
+    </footer>
+</body>
+</html>
