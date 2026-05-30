@@ -101,9 +101,9 @@
         }
         /* Project Profile */
         .profile-card {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
             margin-top: 15px;
         }
         .profile-item {
@@ -237,6 +237,7 @@
     <header>
         <h1>个人研发日志</h1>
         <p>从代码到实物：造你所想 - 期末项目</p>
+        <p>曾乾浩</p>
     </header>
 
     <nav>
@@ -244,7 +245,6 @@
             <li><a href="#profile">Project Profile</a></li>
             <li><a href="#design-log">Design Log</a></li>
             <li><a href="#tech-stack">Tech Stack</a></li>
-            <li><a href="#code">核心代码</a></li>
             <li><a href="#reflections">Reflections</a></li>
         </ul>
     </nav>
@@ -257,19 +257,19 @@
             <div class="profile-card">
                 <div class="profile-item">
                     <label>项目名称</label>
-                    <div class="placeholder">[在此填写项目名称]</div>
+                    <div>智控灯--非侵入式人体+光照双感应wifi智能开关控制器</div>
                 </div>
                 <div class="profile-item">
-                    <label>产品定义（一句话）</label>
-                    <div class="placeholder">[用一句话描述你的产品是什么、解决什么问题]</div>
+                    <label>项目简介</label>
+                    <div>本项目基于<strong>ESP32</strong>开发免布线外置智能开关，依托芯片自建网页实现无线控制，搭配超声波+光敏双传感器，舵机机械按压原有墙面开关，无需改动室内电路。采用三级优先级控制逻辑，网页手动操控优先级最高并可短时锁定自动功能；昏暗且有人靠近自动开灯，无人活动5分钟自动关灯，通过光敏只控开灯的算法解决灯光自闪、误熄灯问题，3D打印外壳粘贴安装，适配宿舍、租房、独居老人等场景。</div>
                 </div>
                 <div class="profile-item">
-                    <label>团队成员</label>
-                    <div class="placeholder">[成员1：姓名]<br>[成员2：姓名]<br>[成员3：姓名]</div>
+                    <label>小组成员</label>
+                    <div>张志豪、潘旨愚、阴伟鸿、曹帅、曾乾浩</div>
                 </div>
                 <div class="profile-item">
                     <label>个人贡献</label>
-                    <div class="placeholder">[描述你在项目中的具体职责和贡献]</div>
+                    <div>负责项目软硬件联调，调试ESP32网页服务与传感器驱动代码，逐项验证远程操控、感应启停、定时自锁功能，排查传感误触发、舵机动作异常等故障，保障整机逻辑稳定可靠。</div>
                 </div>
             </div>
         </section>
@@ -281,18 +281,39 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <h3>Saturday Morning - 周六上午</h3>
-                    <div class="placeholder">[设计思路、初始方案]</div>
-                    <div class="media-placeholder">
-                        [插入失败的草图/照片]<br>
-                        <small>可使用 &lt;img src="图片路径" alt="描述"&gt; 添加图片</small>
+                    <div>初始方案：以 ESP32 DevKit NodeMCU 作为主控核心，搭载 HC-SR04 超声波传感器与光敏电阻分别采集人体动向和环境光照数据，利用 SG90 舵机模拟人手按压原有墙面物理开关，整机配套定制 3D 打印一体化外壳，依托 3M 双面胶粘贴在原有开关侧边，采用 USB-TYPE-C 低压供电，无需拆装原有线路，五分钟即可完成贴装、实现即贴即用；设备搭载独创的三级优先级、状态锁存与单向触发控制逻辑，其中优先级最高为手动控制，可通过 Blinker 手机 APP 远程操控或是设备本地按键启停开关，触发后自动锁定自动控制逻辑十分钟，防止自动程序干预人为操作；次优先级为自动开灯，在未处于手动锁定前提下，环境光线昏暗且超声波探测两米内有人体靠近时，舵机执行动作点亮灯具；末级为自动关灯，非锁定状态下传感器连续五分钟检测不到人体活动便自动关停灯光，系统还设定光敏仅参与开灯判定、不介入关灯逻辑的单向规则，既从源头杜绝灯具自身光源干扰光敏引发的误触发与灯光频闪问题，又能依靠人体活动实时刷新关灯倒计时，有效解决人在室内却无故熄灯的使用痛点
+                        项目设计卡：
+                    </div>
+                    <div style="margin-top: 15px; text-align: center;">
+                        <img src="images/design-card.png" alt="初始方案设计图" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
                     </div>
                 </div>
 
                 <div class="timeline-item">
                     <h3>Saturday Afternoon - 周六下午</h3>
-                    <div class="placeholder">[方案调整、遇到的问题]</div>
+
+                    <div style="background-color: #fff5f5; border-left: 4px solid #dc3545; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
+                        <strong style="color: #dc3545;">问题 1：</strong>加入 Blinker 模块后编译速度很慢，其控制过程复杂
+                    </div>
+                    <div style="background-color: #f0fff4; border-left: 4px solid #28a745; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
+                        <strong style="color: #28a745;">方案调整：</strong>放弃 Blinker APP，改用 ESP32 自建网页实现无线控制
+                    </div>
                     <div class="media-placeholder">
-                        [插入失败的草图/照片]
+                        [插入相关截图/照片]
+                    </div>
+
+                    <div style="background-color: #fff5f5; border-left: 4px solid #dc3545; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
+                        <strong style="color: #dc3545;">问题 2：</strong>ESP32 DevKit NodeMCU 芯片所需的数据线难以寻找
+                    </div>
+                    <div style="background-color: #f0fff4; border-left: 4px solid #28a745; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
+                        <strong style="color: #28a745;">方案调整：</strong>更换为 ESP32 LOLIN S2 Mini 芯片，采用 Type-C 接口
+                    </div>
+                    <div class="media-placeholder">
+                        [插入相关截图/照片]
+                    </div>
+
+                    <div style="background-color: #e8f4f8; border-left: 4px solid #0f3460; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
+                        <strong style="color: #0f3460;">最终方案：</strong>基于 ESP32 开发免布线外置智能开关，依托芯片自建网页实现无线控制，搭配超声波 + 光敏双传感器，舵机机械按压原有墙面开关，无需改动室内电路。采用三级优先级控制逻辑，网页手动操控优先级最高并可短时锁定自动功能；昏暗且有人靠近自动开灯，无人活动 5 分钟自动关灯，通过光敏只控开灯的算法解决灯光自闪、误熄灯问题，3D 打印外壳粘贴安装，适配宿舍、租房、独居老人等场景。
                     </div>
                 </div>
 
@@ -311,60 +332,20 @@
             <h2>Tech Stack - 技术栈与硬件清单</h2>
 
             <h3>硬件清单</h3>
-            <div class="hardware-list">
-                <div class="hardware-item">
-                    <div class="icon">[ ]</div>
-                    <strong>[硬件名称1]</strong>
-                    <p><small>[型号/规格]</small></p>
-                </div>
-                <div class="hardware-item">
-                    <div class="icon">[ ]</div>
-                    <strong>[硬件名称2]</strong>
-                    <p><small>[型号/规格]</small></p>
-                </div>
-                <div class="hardware-item">
-                    <div class="icon">[ ]</div>
-                    <strong>[硬件名称3]</strong>
-                    <p><small>[型号/规格]</small></p>
-                </div>
-                <div class="hardware-item">
-                    <div class="icon">[ ]</div>
-                    <strong>[硬件名称4]</strong>
-                    <p><small>[型号/规格]</small></p>
-                </div>
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #0f3460; line-height: 2;">
+                ESP32 LOLIN S2 Mini ×1<br>
+                HC-SR04 超声波传感器 ×1<br>
+                光敏电阻 ×1<br>
+                SG90 舵机 ×1<br>
+                220Ω 电阻 ×1<br>
+                杜邦线 ×10<br>
+                USB-T-C 电源线 ×1<br>
+                PLA 3D 打印耗材（约 50g）
             </div>
 
             <h3>软件/工具</h3>
-            <div class="placeholder">
-                [Arduino IDE / PlatformIO / 其他开发环境]<br>
-                [使用的库/框架]
-            </div>
-        </section>
-
-        <!-- Section 4: Core Code -->
-        <section id="code">
-            <h2>核心嵌入式代码</h2>
-
-            <p>GitHub 仓库链接：<a href="#" class="placeholder">[在此粘贴 GitHub 链接]</a></p>
-
-            <h3>核心功能代码片段 1</h3>
-            <div class="code-block">
-<span class="comment">// [代码功能说明]</span>
-<span class="keyword">void</span> <span class="function">setup</span>() {
-    <span class="comment">// [初始化代码]</span>
-}
-
-<span class="keyword">void</span> <span class="function">loop</span>() {
-    <span class="comment">// [主循环代码]</span>
-}
-            </div>
-
-            <h3>核心功能代码片段 2</h3>
-            <div class="code-block">
-<span class="comment">// [代码功能说明]</span>
-<span class="keyword">void</span> <span class="function">yourFunction</span>() {
-    <span class="comment">// [在此粘贴核心代码]</span>
-}
+            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #0f3460;">
+                Arduino IDE
             </div>
         </section>
 
