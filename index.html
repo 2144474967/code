@@ -390,14 +390,17 @@
                 <div class="timeline-item">
                     <h3>Saturday Afternoon - 周六下午</h3>
 
+                    <div style="background-color: #e8f4f8; border-left: 4px solid #0f3460; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
+                        <strong style="color: #0f3460;">初步实现方案：</strong>基于 ESP32 DevKit NodeMCU 开发，搭载 HC-SR04 超声波传感器与光敏电阻，使用 Blinker APP 进行远程控制，SG90 舵机按压墙面开关。
+                    </div>
+
+                    <h4 style="color: #dc3545; margin: 18px 0 8px;">遇到的问题</h4>
+
                     <div style="background-color: #fff5f5; border-left: 4px solid #dc3545; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
                         <strong style="color: #dc3545;">问题 1：</strong>加入 Blinker 模块后编译速度很慢，其控制过程复杂
                     </div>
                     <div style="background-color: #f0fff4; border-left: 4px solid #28a745; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
                         <strong style="color: #28a745;">方案调整：</strong>放弃 Blinker APP，改用 ESP32 自建网页实现无线控制
-                    </div>
-                    <div class="img-wrap">
-                        <img src="images/screenshot_2026-05-30_1200.jpg" alt="周六下午截图">
                     </div>
 
                     <div style="background-color: #fff5f5; border-left: 4px solid #dc3545; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
@@ -406,10 +409,14 @@
                     <div style="background-color: #f0fff4; border-left: 4px solid #28a745; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
                         <strong style="color: #28a745;">方案调整：</strong>更换为 ESP32 LOLIN S2 Mini 芯片，采用 Type-C 接口
                     </div>
-                    
+
+                    <h4 style="color: #0f3460; margin: 18px 0 8px;">最终方案</h4>
 
                     <div style="background-color: #e8f4f8; border-left: 4px solid #0f3460; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
-                        <strong style="color: #0f3460;">最终方案：</strong>基于 ESP32 开发免布线外置智能开关，依托芯片自建网页实现无线控制，搭配超声波 + 光敏双传感器，舵机机械按压原有墙面开关，无需改动室内电路。采用三级优先级控制逻辑，网页手动操控优先级最高并可短时锁定自动功能；昏暗且有人靠近自动开灯，无人活动 5 分钟自动关灯，通过光敏只控开灯的算法解决灯光自闪、误熄灯问题，3D 打印外壳粘贴安装，适配宿舍、租房、独居老人等场景。
+                        基于 ESP32 开发免布线外置智能开关，依托芯片自建网页实现无线控制，搭配超声波 + 光敏双传感器，舵机机械按压原有墙面开关，无需改动室内电路。采用三级优先级控制逻辑，网页手动操控优先级最高并可短时锁定自动功能；昏暗且有人靠近自动开灯，无人活动 5 分钟自动关灯，通过光敏只控开灯的算法解决灯光自闪、误熄灯问题，3D 打印外壳粘贴安装，适配宿舍、租房、独居老人等场景。
+                    </div>
+                    <div class="img-wrap">
+                        <img src="images/screenshot_2026-05-30_1200.jpg" alt="周六下午截图">
                     </div>
                 </div>
 
