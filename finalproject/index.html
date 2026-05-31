@@ -11,9 +11,6 @@
             box-sizing: border-box;
             font-family: "Microsoft Yahei", sans-serif;
         }
-        html {
-            scroll-behavior: smooth;
-        }
         body {
             background-color: #f0f2f5;
             color: #333;
@@ -22,71 +19,44 @@
         header {
             background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
             color: white;
-            padding: 50px 20px 40px;
+            padding: 40px 20px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(233,69,96,0.1) 0%, transparent 60%);
-            animation: pulse 6s ease-in-out infinite;
-        }
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.1); opacity: 1; }
         }
         header h1 {
-            font-size: 2.2em;
-            margin-bottom: 8px;
-            position: relative;
-            letter-spacing: 2px;
+            font-size: 2em;
+            margin-bottom: 10px;
         }
         header p {
             opacity: 0.8;
-            font-size: 1.05em;
-            position: relative;
-        }
-        header p:last-child {
-            margin-top: 6px;
-            opacity: 0.6;
-            font-size: 0.95em;
+            font-size: 1.1em;
         }
         nav {
             background-color: #1a1a2e;
-            padding: 14px 0;
+            padding: 12px 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
         nav ul {
             list-style: none;
             display: flex;
             justify-content: center;
-            gap: 12px;
+            gap: 15px;
             flex-wrap: wrap;
             padding: 0 10px;
         }
         nav a {
-            color: rgba(255,255,255,0.85);
+            color: white;
             text-decoration: none;
-            padding: 8px 20px;
+            padding: 8px 18px;
             border-radius: 20px;
             transition: all 0.3s;
             font-size: 0.95em;
-            border: 1px solid transparent;
         }
         nav a:hover {
             background-color: #e94560;
-            color: white;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(233,69,96,0.4);
         }
         .container {
             max-width: 960px;
@@ -98,8 +68,7 @@
             padding: 30px;
             margin-bottom: 30px;
             border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-            transition: transform 0.2s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
         h2 {
             color: #0f3460;
@@ -107,12 +76,11 @@
             padding-bottom: 10px;
             border-bottom: 3px solid #e94560;
             font-size: 1.5em;
-            position: relative;
         }
         h3 {
             color: #16213e;
             margin: 20px 0 10px;
-            font-size: 1.15em;
+            font-size: 1.2em;
         }
         .placeholder {
             background-color: #fff3cd;
@@ -135,26 +103,20 @@
         .profile-card {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 15px;
             margin-top: 15px;
         }
         .profile-item {
             background-color: #f8f9fa;
-            padding: 16px 18px;
+            padding: 15px;
             border-radius: 8px;
             border-left: 4px solid #e94560;
-            transition: background-color 0.2s;
-        }
-        .profile-item:hover {
-            background-color: #f1f3f5;
         }
         .profile-item label {
             font-weight: bold;
             color: #0f3460;
             display: block;
-            margin-bottom: 4px;
-            font-size: 0.9em;
-            letter-spacing: 1px;
+            margin-bottom: 5px;
         }
         /* Timeline */
         .timeline {
@@ -176,10 +138,6 @@
             padding: 20px;
             background-color: #f8f9fa;
             border-radius: 8px;
-            transition: box-shadow 0.3s;
-        }
-        .timeline-item:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
         }
         .timeline-item::before {
             content: '';
@@ -240,78 +198,23 @@
         .bug-card {
             background-color: #fff5f5;
             border-left: 4px solid #dc3545;
-            padding: 16px 18px;
+            padding: 15px;
             margin: 15px 0;
             border-radius: 0 8px 8px 0;
-            transition: transform 0.2s;
-        }
-        .bug-card:hover {
-            transform: translateX(4px);
         }
         .solution-card {
             background-color: #f0fff4;
             border-left: 4px solid #28a745;
-            padding: 16px 18px;
+            padding: 15px;
             margin: 15px 0;
             border-radius: 0 8px 8px 0;
-            transition: transform 0.2s;
-        }
-        .solution-card:hover {
-            transform: translateX(4px);
-        }
-        .img-wrap {
-            margin-top: 15px;
-            text-align: center;
-        }
-        .img-wrap img {
-            max-width: 100%;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-        }
-        .img-wrap img:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
         }
         footer {
             text-align: center;
-            padding: 30px 20px;
+            padding: 25px;
             background-color: #1a1a2e;
             color: white;
             margin-top: 40px;
-            line-height: 2;
-        }
-        footer a {
-            color: #e94560;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        footer a:hover {
-            color: #ff6b81;
-            text-decoration: underline;
-        }
-        .repo-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 8px;
-            padding: 8px 20px;
-            background-color: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            color: white;
-            text-decoration: none;
-            font-size: 0.9em;
-            transition: all 0.3s;
-        }
-        .repo-link:hover {
-            background-color: #e94560;
-            border-color: #e94560;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(233,69,96,0.4);
-            text-decoration: none;
-            color: white;
         }
         @media (max-width: 768px) {
             .profile-card {
@@ -343,7 +246,6 @@
             <li><a href="#design-log">Design Log</a></li>
             <li><a href="#tech-stack">Tech Stack</a></li>
             <li><a href="#reflections">Reflections</a></li>
-            <li><a href="https://github.com/2144474967/code" target="_blank" style="border: 1px solid rgba(255,255,255,0.3);">GitHub</a></li>
         </ul>
     </nav>
 
@@ -379,26 +281,16 @@
             <div class="timeline">
                 <div class="timeline-item">
                     <h3>Saturday Morning - 周六上午</h3>
-                    <div style="background-color: #e8f4f8; border-left: 4px solid #0f3460; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
-                        <strong style="color: #0f3460;">设计方案并分工：</strong>小组成员讨论确定项目方向，明确各人职责分工。
+                    <div>初始方案：以 ESP32 DevKit NodeMCU 作为主控核心，搭载 HC-SR04 超声波传感器与光敏电阻分别采集人体动向和环境光照数据，利用 SG90 舵机模拟人手按压原有墙面物理开关，整机配套定制 3D 打印一体化外壳，依托 3M 双面胶粘贴在原有开关侧边，采用 USB-TYPE-C 低压供电，无需拆装原有线路，五分钟即可完成贴装、实现即贴即用；设备搭载独创的三级优先级、状态锁存与单向触发控制逻辑，其中优先级最高为手动控制，可通过 Blinker 手机 APP 远程操控或是设备本地按键启停开关，触发后自动锁定自动控制逻辑十分钟，防止自动程序干预人为操作；次优先级为自动开灯，在未处于手动锁定前提下，环境光线昏暗且超声波探测两米内有人体靠近时，舵机执行动作点亮灯具；末级为自动关灯，非锁定状态下传感器连续五分钟检测不到人体活动便自动关停灯光，系统还设定光敏仅参与开灯判定、不介入关灯逻辑的单向规则，既从源头杜绝灯具自身光源干扰光敏引发的误触发与灯光频闪问题，又能依靠人体活动实时刷新关灯倒计时，有效解决人在室内却无故熄灯的使用痛点
+                        项目设计卡：
                     </div>
-
-                    <h4 style="color: #0f3460; margin: 18px 0 8px;">初始方案</h4>
-
-                    <div>以 ESP32 DevKit NodeMCU 作为主控核心，搭载 HC-SR04 超声波传感器与光敏电阻分别采集人体动向和环境光照数据，利用 SG90 舵机模拟人手按压原有墙面物理开关，整机配套定制 3D 打印一体化外壳，依托 3M 双面胶粘贴在原有开关侧边，采用 USB-TYPE-C 低压供电，无需拆装原有线路，五分钟即可完成贴装、实现即贴即用；设备搭载独创的三级优先级、状态锁存与单向触发控制逻辑，其中优先级最高为手动控制，可通过 Blinker 手机 APP 远程操控或是设备本地按键启停开关，触发后自动锁定自动控制逻辑十分钟，防止自动程序干预人为操作；次优先级为自动开灯，在未处于手动锁定前提下，环境光线昏暗且超声波探测两米内有人体靠近时，舵机执行动作点亮灯具；末级为自动关灯，非锁定状态下传感器连续五分钟检测不到人体活动便自动关停灯光，系统还设定光敏仅参与开灯判定、不介入关灯逻辑的单向规则，既从源头杜绝灯具自身光源干扰光敏引发的误触发与灯光频闪问题，又能依靠人体活动实时刷新关灯倒计时，有效解决人在室内却无故熄灯的使用痛点。</div>
-                    <div class="img-wrap">
-                        <img src="images/design-card.png" alt="初始方案设计图">
+                    <div style="margin-top: 15px; text-align: center;">
+                        <img src="images/design-card.png" alt="初始方案设计图" style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
                     </div>
                 </div>
 
                 <div class="timeline-item">
                     <h3>Saturday Afternoon - 周六下午</h3>
-
-                    <div style="background-color: #e8f4f8; border-left: 4px solid #0f3460; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
-                        <strong style="color: #0f3460;">初步实现方案：</strong>基于 ESP32 DevKit NodeMCU 开发，搭载 HC-SR04 超声波传感器与光敏电阻，使用 Blinker APP 进行远程控制，SG90 舵机按压墙面开关。
-                    </div>
-
-                    <h4 style="color: #dc3545; margin: 18px 0 8px;">遇到的问题</h4>
 
                     <div style="background-color: #fff5f5; border-left: 4px solid #dc3545; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
                         <strong style="color: #dc3545;">问题 1：</strong>加入 Blinker 模块后编译速度很慢，其控制过程复杂
@@ -406,8 +298,8 @@
                     <div style="background-color: #f0fff4; border-left: 4px solid #28a745; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
                         <strong style="color: #28a745;">方案调整：</strong>放弃 Blinker APP，改用 ESP32 自建网页实现无线控制
                     </div>
-                    <div class="img-wrap">
-                        <img src="images/screenshot_2026-05-30_1200.jpg" alt="周六下午截图">
+                    <div class="media-placeholder">
+                        [插入相关截图/照片]
                     </div>
 
                     <div style="background-color: #fff5f5; border-left: 4px solid #dc3545; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
@@ -416,24 +308,20 @@
                     <div style="background-color: #f0fff4; border-left: 4px solid #28a745; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
                         <strong style="color: #28a745;">方案调整：</strong>更换为 ESP32 LOLIN S2 Mini 芯片，采用 Type-C 接口
                     </div>
-
-                    <h4 style="color: #0f3460; margin: 18px 0 8px;">最终方案</h4>
+                    <div class="media-placeholder">
+                        [插入相关截图/照片]
+                    </div>
 
                     <div style="background-color: #e8f4f8; border-left: 4px solid #0f3460; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
-                        基于 ESP32 开发免布线外置智能开关，依托芯片自建网页实现无线控制，搭配超声波 + 光敏双传感器，舵机机械按压原有墙面开关，无需改动室内电路。采用三级优先级控制逻辑，网页手动操控优先级最高并可短时锁定自动功能；昏暗且有人靠近自动开灯，无人活动 5 分钟自动关灯，通过光敏只控开灯的算法解决灯光自闪、误熄灯问题，3D 打印外壳粘贴安装，适配宿舍、租房、独居老人等场景。
+                        <strong style="color: #0f3460;">最终方案：</strong>基于 ESP32 开发免布线外置智能开关，依托芯片自建网页实现无线控制，搭配超声波 + 光敏双传感器，舵机机械按压原有墙面开关，无需改动室内电路。采用三级优先级控制逻辑，网页手动操控优先级最高并可短时锁定自动功能；昏暗且有人靠近自动开灯，无人活动 5 分钟自动关灯，通过光敏只控开灯的算法解决灯光自闪、误熄灯问题，3D 打印外壳粘贴安装，适配宿舍、租房、独居老人等场景。
                     </div>
                 </div>
 
                 <div class="timeline-item">
                     <h3>Sunday Morning - 周日早晨</h3>
-                    <div style="background-color: #e8f4f8; border-left: 4px solid #0f3460; padding: 15px; border-radius: 0 8px 8px 0; margin: 15px 0;">
-                        <strong style="color: #0f3460;">完成外壳组装：</strong>将 3D 打印外壳与舵机、传感器等模块组装成型，粘贴在墙面开关旁，完成整机部署。
-                    </div>
-
-                    <h4 style="color: #0f3460; margin: 18px 0 8px;">最终作品演示</h4>
-
-                    <div class="img-wrap">
-                        <video src="展示视频.mp4" controls style="max-width: 100%; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);"></video>
+                    <div class="placeholder">[最终方案、迭代结果]</div>
+                    <div class="media-placeholder">
+                        [插入最终设计/照片]
                     </div>
                 </div>
             </div>
@@ -468,42 +356,36 @@
             <h3>遇到的硬核 Bug</h3>
 
             <div class="bug-card">
-                <strong>Bug #1：舵机可旋转角度受限，无法往两边旋转</strong>
-                <div>SG90 舵机实际控制中只能在 0°~90° 范围内旋转，无法向两侧（即 0° 以下或 90° 以上）继续偏转。墙面开关需要舵机臂向左右两个方向拨动才能实现开/关，单侧 90° 的行程不够覆盖开关的完整动作幅度，导致舵机无法可靠地完成"按下"和"弹起"两个状态的切换。</div>
+                <strong>Bug #1：[问题标题]</strong>
+                <div class="placeholder">[详细描述遇到的问题、现象]</div>
             </div>
 
             <div class="bug-card">
-                <strong>Bug #2：装置与开关难以连接</strong>
-                <div>装置与墙面开关之间难以实现稳定连接，舵机臂无法有效按压开关。</div>
+                <strong>Bug #2：[问题标题]</strong>
+                <div class="placeholder">[详细描述遇到的问题、现象]</div>
             </div>
 
             <h3>解决方案与妥协</h3>
 
             <div class="solution-card">
                 <strong>针对 Bug #1：</strong>
-                <div>将舵机初始角度设置为 45°，以此为中位点，向左可旋转至 0°、向右可旋转至 90°，从而让舵机臂具备向两侧拨动的行程，完整覆盖开关的"开"和"关"两个状态。仅通过代码层面的角度偏移调整，无需改动硬件结构，便解决了单侧旋转不足的问题。</div>
+                <div class="placeholder">[如何解决的？或者做了什么妥协？]</div>
             </div>
 
             <div class="solution-card">
                 <strong>针对 Bug #2：</strong>
-                <div>妥协方案：降低部分美观性，将舵机直接粘贴在开关旁边完成连接。</div>
+                <div class="placeholder">[如何解决的？或者做了什么妥协？]</div>
             </div>
 
             <h3>整体反思</h3>
-            <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #0f3460; line-height: 2;">
-                <p><strong>收获：</strong>这次项目让我深刻体会到"从代码到实物"的过程中，硬件调试远比软件编程更具挑战性。在软硬件联调中，我学会了如何排查传感器误触发、舵机动作异常等实际问题，也掌握了 ESP32 网页服务与传感器驱动的配合调试方法。方案迭代的过程让我认识到，工程设计没有一步到位的完美方案，遇到问题及时调整、快速验证才是关键。</p>
-                <p><strong>教训：</strong>前期选型时没有充分验证硬件兼容性，导致后期被迫更换芯片（DevKit → LOLIN S2 Mini）和控制方式（Blinker APP → 自建网页），浪费了宝贵的时间。舵机角度和力度的问题也提醒我，在动手搭建前应该先做小规模验证，而不是等到整机组装完毕才发现根本性问题。</p>
-                <p><strong>如果重新来：</strong>会先用面包板搭建最小可行原型，逐一验证传感器灵敏度、舵机行程和力度是否满足需求，确认硬件可行后再进行 3D 打印外壳和整体组装，避免后期因硬件问题推翻重来。</p>
+            <div class="placeholder">
+                [项目整体的收获、教训、如果重新来会怎么做]
             </div>
         </section>
     </div>
 
     <footer>
         <p>&copy; 2025 从代码到实物：造你所想 - 个人研发日志</p>
-        <a class="repo-link" href="https://github.com/2144474967/code" target="_blank">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></path></svg>
-            GitHub 仓库
-        </a>
     </footer>
 </body>
 </html>
