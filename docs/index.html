@@ -459,6 +459,100 @@
             <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #0f3460;">
                 Arduino IDE
             </div>
+
+            <h3>核心代码</h3>
+
+            <h4 style="color: #16213e; margin: 18px 0 8px;">引脚定义与参数配置</h4>
+            <div class="code-block"><span class="comment">// 引脚定义</span>
+<span class="keyword">#define</span> TRIG_PIN    38   <span class="comment">// 超声波TRIG</span>
+<span class="keyword">#define</span> ECHO_PIN    36   <span class="comment">// 超声波ECHO</span>
+<span class="keyword">#define</span> LIGHT_PIN   2    <span class="comment">// 光敏电阻</span>
+<span class="keyword">#define</span> SERVO_PIN   33   <span class="comment">// 舵机信号</span>
+
+<span class="comment">// 核心参数</span>
+<span class="keyword">const int</span> DETECT_DISTANCE = 200;       <span class="comment">// 人体检测距离阈值（cm）</span>
+<span class="keyword">const int</span> LIGHT_THRESHOLD = 2000;      <span class="comment">// 光照阈值（0-4095）</span>
+<span class="keyword">const int</span> AUTO_OFF_DELAY  = 1*60*1000; <span class="comment">// 无人自动关灯延时</span>
+<span class="keyword">const int</span> ON_ANGLE = 90;               <span class="comment">// 开灯舵机角度</span>
+<span class="keyword">const int</span> OFF_ANGLE = 0;               <span class="comment">// 关灯舵机角度</span></div>
+
+            <h4 style="color: #16213e; margin: 18px 0 8px;">超声波测距</h4>
+            <div class="code-block"><span class="keyword">float</span> <span class="function">getDistance</span>() {
+  digitalWrite(TRIG_PIN, LOW);
+  delayMicroseconds(2);
+  digitalWrite(TRIG_PIN, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(TRIG_PIN, LOW);
+  <span class="keyword">long</span> duration = pulseIn(ECHO_PIN, HIGH, 30000);
+  <span class="keyword">if</span> (duration == 0) <span class="keyword">return</span> 999;
+  <span class="keyword">return</span> duration * 0.034 / 2;
+}</div>
+
+            <h4 style="color: #16213e; margin: 18px 0 8px;">舵机开灯/关灯</h4>
+            <div class="code-block"><span class="keyword">void</span> <span class="function">turnOnLight</span>() {
+  <span class="keyword">if</span> (!lightState) {
+    servo.write(ON_ANGLE);   <span class="comment">// 舵机旋转按压开关</span>
+    delay(500);
+    servo.write(OFF_ANGLE);  <span class="comment">// 舵机回中</span>
+    lightState = <span class="keyword">true</span>;
+  }
+}
+
+<span class="keyword">void</span> <span class="function">turnOffLight</span>() {
+  <span class="keyword">if</span> (lightState) {
+    servo.write(ON_ANGLE);
+    delay(500);
+    servo.write(OFF_ANGLE);
+    lightState = <span class="keyword">false</span>;
+  }
+}</div>
+
+            <h4 style="color: #16213e; margin: 18px 0 8px;">自动控制主循环</h4>
+            <div class="code-block"><span class="keyword">void</span> <span class="function">loop</span>() {
+  server.handleClient();
+  <span class="keyword">if</span> (autoMode) {
+    currentDistance = getDistance();
+    currentLight = readLightStable();
+
+    <span class="comment">// 自动开灯：有人 + 光线暗 + 灯关闭</span>
+    <span class="keyword">if</span> (currentDistance < DETECT_DISTANCE) {
+      lastHumanTime = millis();
+      <span class="keyword">if</span> (currentLight < LIGHT_THRESHOLD && !lightState) {
+        turnOnLight();
+      }
+    }
+    <span class="comment">// 自动关灯：无人超过延时 + 灯开启</span>
+    <span class="keyword">if</span> (millis() - lastHumanTime > AUTO_OFF_DELAY && lightState) {
+      turnOffLight();
+    }
+  }
+  delay(500);
+}</div>
+
+            <h4 style="color: #16213e; margin: 18px 0 8px;">网页控制面板生成</h4>
+            <div class="code-block"><span class="keyword">void</span> <span class="function">handleRoot</span>() {
+  String html = <span class="string">"&lt;!DOCTYPE html&gt;&lt;html&gt;..."</span>;
+  <span class="comment">// 模式切换按钮</span>
+  <span class="keyword">if</span> (autoMode) {
+    html += <span class="string">"&lt;button onclick='/setManual'&gt;切换为手动&lt;/button&gt;"</span>;
+  } <span class="keyword">else</span> {
+    html += <span class="string">"&lt;button onclick='/setAuto'&gt;切换为自动&lt;/button&gt;"</span>;
+  }
+  <span class="comment">// 灯光控制按钮（自动模式下禁用）</span>
+  <span class="comment">// 实时状态：距离、光照、灯状态</span>
+  server.send(200, <span class="string">"text/html"</span>, html);
+}</div>
+
+            <h4 style="color: #16213e; margin: 18px 0 8px;">网页路由注册</h4>
+            <div class="code-block">server.on(<span class="string">"/"</span>,        handleRoot);       <span class="comment">// 控制面板主页</span>
+server.on(<span class="string">"/on"</span>,      handleOn);         <span class="comment">// 网页开灯</span>
+server.on(<span class="string">"/off"</span>,     handleOff);        <span class="comment">// 网页关灯</span>
+server.on(<span class="string">"/setAuto"</span>,   handleSetAuto);   <span class="comment">// 切换自动模式</span>
+server.on(<span class="string">"/setManual"</span>, handleSetManual); <span class="comment">// 切换手动模式</span></div>
+
+            <div style="margin-top: 15px; text-align: center;">
+                <a href="https://github.com/2144474967/code/blob/master/docs/sketch_may30a_01.ino" target="_blank" style="display: inline-block; padding: 10px 24px; background-color: #0f3460; color: white; border-radius: 8px; text-decoration: none; font-size: 0.95em; transition: all 0.3s;">查看完整源码</a>
+            </div>
         </section>
 
         <!-- Section 5: Reflections -->
