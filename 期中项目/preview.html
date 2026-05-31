@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>智能小夜灯 - Preview</title>
+<style>
+:root{--bg:#080c14;--card:#111827;--text:#b8c5d6;--muted:#5a6680;--gold:#f0c060;--glow:rgba(240,192,96,0.25)}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','PingFang SC',sans-serif;
+background:radial-gradient(ellipse at 50% 25%,#1a2744 0%,#0c101a 60%,#080c14 100%);
+color:var(--text);min-height:100vh;display:flex;align-items:center;justify-content:center}
+#stars{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.wrap{position:relative;z-index:1;width:92%;max-width:380px;padding:36px 28px;text-align:center;animation:fadeIn .6s ease-out}
+@keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.bulb{width:100px;height:100px;border-radius:50%;margin:0 auto 28px;
+background:var(--card);box-shadow:inset 0 0 30px rgba(0,0,0,.5),0 0 0 rgba(240,192,96,0);
+transition:all .7s cubic-bezier(.34,1.56,.64,1);position:relative}
+.bulb::after{content:'';position:absolute;inset:-4px;border-radius:50%;
+border:1.5px solid rgba(255,255,255,.04);pointer-events:none}
+.bulb.on{background:radial-gradient(circle at 42% 38%,#fff3d0 0%,#f0c060 35%,#c8861a 70%,#6b3a04 100%);
+box-shadow:0 0 30px var(--glow),0 0 70px rgba(240,192,96,.18),0 0 140px rgba(240,192,96,.08);
+animation:breath 2.4s ease-in-out infinite}
+@keyframes breath{0%,100%{box-shadow:0 0 30px var(--glow),0 0 70px rgba(240,192,96,.18),0 0 140px rgba(240,192,96,.08)}
+50%{box-shadow:0 0 50px rgba(240,192,96,.35),0 0 100px rgba(240,192,96,.25),0 0 180px rgba(240,192,96,.12)}}
+h1{font-weight:300;font-size:1.6em;letter-spacing:.06em;color:#d8dfec;margin-bottom:22px}
+.card{display:flex;justify-content:space-between;align-items:center;
+background:var(--card);border-radius:10px;padding:12px 16px;margin:6px 0;font-size:.9em;
+border:1px solid rgba(255,255,255,.04)}
+.card span:first-child{color:var(--muted)}
+.card span:last-child{font-weight:600;color:#e0e8f2}
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:.78em;font-weight:600}
+.tag.auto{background:#132a1e;color:#4ade80}
+.tag.manual{background:#2a2012;color:var(--gold)}
+.btns{display:flex;gap:10px;margin-top:26px;flex-wrap:wrap;justify-content:center}
+.btn{border:none;border-radius:10px;padding:13px 20px;font-size:.95em;font-weight:500;
+cursor:pointer;transition:all .2s ease;letter-spacing:.02em;color:#fff;flex:1;min-width:90px}
+.btn:active{transform:scale(.96)}
+.btn-on{background:linear-gradient(135deg,#f0c060,#c8861a);box-shadow:0 4px 18px rgba(240,192,96,.2)}
+.btn-on:hover{box-shadow:0 6px 28px rgba(240,192,96,.4);transform:translateY(-1px)}
+.btn-off{background:linear-gradient(135deg,#2d3548,#1a1f2e);box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.btn-off:hover{box-shadow:0 6px 22px rgba(0,0,0,.6);transform:translateY(-1px)}
+.btn-mode{background:transparent;border:1.5px solid #374151;color:var(--text);flex:0 0 auto;min-width:auto}
+.btn-mode:hover{border-color:#6b7a94;background:rgba(255,255,255,.02)}
+.hint{margin-top:22px;font-size:.72em;color:var(--muted);opacity:.7}
+html{touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none}
+body{overflow-x:hidden}
+.btn{min-height:44px}
+.swatches{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0 6px}
+.sw{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:all .15s}
+.sw.on{border-color:#fff;box-shadow:0 0 10px currentColor;transform:scale(1.15)}
+.slider-wrap{display:flex;align-items:center;gap:10px;margin:10px 0}
+.slider-wrap span{color:var(--muted);font-size:.78em;white-space:nowrap}
+input[type=range]{-webkit-appearance:none;flex:1;height:5px;border-radius:3px;background:#2d3548;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--gold);cursor:pointer;box-shadow:0 0 8px var(--glow)}
+.btn-chase{background:transparent;border:1.5px solid #374151;color:var(--text);width:100%;margin-top:6px}
+.btn-chase.active{border-color:var(--gold);color:var(--gold);box-shadow:0 0 12px rgba(240,192,96,.15)}
+@media(max-width:400px){.wrap{padding:28px 18px}
+h1{font-size:1.4em}.bulb{width:80px;height:80px;margin-bottom:22px}
+.card{padding:10px 14px;font-size:.82em}
+.btn{padding:12px 14px;font-size:.88em;min-width:70px}}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="wrap">
+  <div class="bulb" id="bulb"></div>
+  <h1>智能小夜灯</h1>
+  <div class="card"><span>灯状态</span><span id="ledSt">关闭</span></div>
+  <div class="card"><span>工作模式</span><span id="mode"><span class="tag auto">自动</span></span></div>
+  <div class="card"><span>光照值</span><span id="lux">1234 (0-4095)</span></div>
+  <div class="card"><span>灯带状态</span><span id="stripSt">关闭</span></div>
+  <div class="swatches" id="swatches"></div>
+  <div class="slider-wrap"><span>亮度</span><input type="range" min="5" max="255" value="80" id="briSlider" oninput="simBrightness(this.value)"></div>
+  <button class="btn btn-chase" id="btnChase" onclick="toggleChase()">走马灯</button>
+  <button class="btn btn-chase" id="btnAutoColor" onclick="toggleChaseColor()" style="margin-top:4px;display:none">自动换色</button>
+  <div class="btns">
+    <button class="btn btn-on" onclick="toggleOn()">开灯</button>
+    <button class="btn btn-off" onclick="toggleOff()">关灯</button>
+    <button class="btn btn-mode" onclick="toggleMode()">切换模式</button>
+  </div>
+  <p class="hint">点击开/关灯将切换为手动模式</p>
+</div>
+<script>
+// Color swatches
+var colors=[{n:'暖白',r:255,g:150,b:50},{n:'冷白',r:200,g:210,b:255},{n:'琥珀',r:255,g:80,b:0},{n:'红',r:255,g:0,b:0},{n:'绿',r:0,g:255,b:0},{n:'蓝',r:0,g:100,b:255},{n:'粉',r:255,g:50,b:150},{n:'紫',r:150,g:0,b:255}];
+function renderSwatches(){var h='';for(var i=0;i<colors.length;i++){var c=colors[i];h+='<div class="sw" style="background:rgb('+c.r+','+c.g+','+c.b+')" onclick="setColor('+c.r+','+c.g+','+c.b+')" title="'+c.n+'"></div>'}document.getElementById('swatches').innerHTML=h}
+renderSwatches();
+
+// Shooting stars
+(function(){
+var c=document.getElementById('stars'),x=c.getContext('2d'),w,h,s=[],bg=[];
+function rs(){w=c.width=innerWidth;h=c.height=innerHeight;bg=[];for(var i=0;i<100;i++)bg.push({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.2+.2,a:Math.random()*.35+.3,ph:Math.random()*6.28,f:Math.random()*.0015+.0005})}
+rs();onresize=rs;
+function spawn(){var a=Math.PI/4;return{x:Math.random()*w*.7+w*.15,y:Math.random()*h*.25,len:Math.random()*80+60,spd:Math.random()*2+1,life:0,max:Math.random()*20+12,ang:a}}
+function draw(){x.clearRect(0,0,w,h);
+for(var i=0;i<bg.length;i++){var b=bg[i];var tw=Math.sin(Date.now()*b.f+b.ph)*.3+.6;x.beginPath();x.arc(b.x,b.y,b.r*(.7+tw*.6),0,6.28);x.fillStyle='rgba(190,210,240,'+(b.a*tw)+')';x.fill()}
+for(var i=0;i<s.length;i++){var st=s[i],p=st.life/st.max,al=p<.15?p/.15:1-(p-.15)/.85;
+var ex=st.x+Math.cos(st.ang)*st.len*p,ey=st.y-Math.sin(st.ang)*st.len*p;
+var g=x.createLinearGradient(st.x,st.y,ex,ey);g.addColorStop(0,'rgba(255,245,230,'+al+')');g.addColorStop(1,'rgba(200,210,240,0)');
+x.beginPath();x.moveTo(st.x,st.y);x.lineTo(ex,ey);x.strokeStyle=g;x.lineWidth=1.6;x.stroke();
+x.beginPath();x.arc(st.x,st.y,2.2,0,6.28);x.fillStyle='rgba(255,250,240,'+(al*.85)+')';x.fill()}
+}
+function upd(){if(Math.random()<.07)s.push(spawn());
+for(var i=s.length-1;i>=0;i--){var st=s[i];st.x-=Math.cos(st.ang)*st.spd;st.y+=Math.sin(st.ang)*st.spd;st.life++;if(st.life>st.max||st.x<-80||st.y>h+80)s.splice(i,1)}
+draw()}
+setInterval(upd,66);upd()})();
+
+// Controls
+var led=false,auto=true,chase=false,chaseAuto=false,stripR=255,stripG=150,stripB=50,stripBright=80;
+function update(){
+  document.getElementById('ledSt').textContent=led?'开启':'关闭';
+  document.getElementById('mode').innerHTML=auto?'<span class="tag auto">自动</span>':'<span class="tag manual">手动</span>';
+  document.getElementById('stripSt').textContent=led?'开启':'关闭';
+  var b=document.getElementById('bulb');led?b.classList.add('on'):b.classList.remove('on');
+  document.getElementById('briSlider').value=stripBright;
+  var btn=document.getElementById('btnChase');chase?(btn.classList.add('active'),btn.textContent='走马灯:开'):(btn.classList.remove('active'),btn.textContent='走马灯');
+  var ab=document.getElementById('btnAutoColor');chase?(ab.style.display='',chaseAuto?(ab.classList.add('active'),ab.textContent='自动换色:开'):(ab.classList.remove('active'),ab.textContent='自动换色')):ab.style.display='none';
+  var sw=document.querySelectorAll('.sw');for(var i=0;i<sw.length;i++){var cl=colors[i];sw[i].classList.toggle('on',cl.r==stripR&&cl.g==stripG&&cl.b==stripB)}
+}
+function setColor(r,g,b){stripR=r;stripG=g;stripB=b;update()}
+var briTimer=null,briDrag=false;function simBrightness(v){briDrag=true;stripBright=parseInt(v);clearTimeout(briTimer);briTimer=setTimeout(function(){briDrag=false},250)}
+function toggleChase(){chase=!chase;update()}
+function toggleChaseColor(){chaseAuto=!chaseAuto;update()}
+function toggleOn(){auto=false;led=true;update()}
+function toggleOff(){auto=false;led=false;update()}
+function toggleMode(){auto=!auto;update()}
+update();
+</script>
+</body>
+</html>
